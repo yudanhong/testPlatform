@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selenium>
+	<!-- 1-服务器上执行且保存数据库    0-用户pc端执行 不保存数据 -->
+	<runInServer>0</runInServer>
+	<config >
+		<baseUrl value="http://192.168.1.111:7070/zxhl"/>
+		<driver browser="webdriver.chrome.driver" path="chromedriver_win32\\chromedriver.exe"/>
+	</config>
+<import path="selenium_zw.xml"/>
+
+</selenium>

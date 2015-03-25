@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test name="站网管理" >
+	<suit name="登录" >
+		<case name="登录" ignore="false" expect="水雨情预警">
+			<step type="click" dom="css=input.btn" sleep="1000" isCheck="true"/>
+		</case>
+	</suit>
+	<suit name="预报方案管理">
+		<case name="预报方案管理-新增" ignore="false" expect="保存成功">
+			<step type="click" dom="link=洪水预报" value="" sleep="1000"/>
+			<step type="click" dom="link=预报方案管理" value=""/>
+			<step type="selectFrame" dom="frame_content" value=""/>
+			<step type="click" dom="xpath=/html/body/div[2]/div[2]/div/div[1]/div[2]" value=""/>
+			<step type="select" dom="id=bascd" value="label=雅鲁藏布江-恒河流域"/>
+			<step type="select" dom="id=expst" value="label=娘村"/>
+			<step type="type" dom="id=nm" value="测试组方案"/>
+			<step type="select" dom="id=intv" value = "label=二十四小时"/>
+			<step type="type" dom="id=fspd" value="1"/>
+			<step type="type" dom="id=phpd" value="2"/>
+			<step type="select" dom="id=rll" value="label=水位流量关系曲线"/> 
+			<step type="select" dom="id=mt" value="label=HIMS分布式次洪模型"/>
+			<step type="type" dom="id=qalm" value="11.4"/>
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[1]/td[4]/div" value=""/>
+			<step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>  
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[2]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/> 
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[3]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[4]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[5]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[6]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[7]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[8]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[9]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[10]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[11]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[12]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[13]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[14]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[15]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[16]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/>
+			
+			<step type="click" dom="xpath=//*[@id='table_son']/tbody/tr[17]/td[4]/div" value=""/>
+			 <step type="click" dom="id=pcp_panel_checkbox" value=""/>
+			<step type="click" dom="//div[@onclick='pcp_panel_save()']" value=""/> 
+			
+			<step type="click" dom="css=p.start.fl" />
+			<step type="selectFrame" dom="relative=top" value=""/>
+			<step type="click" dom="link=确定"/>
+		</case>
+	</suit>
+</test>

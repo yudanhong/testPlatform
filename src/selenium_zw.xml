@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test name="站网管理" >
+	<suit name="登录" >
+		<case name="登录" ignore="false" expect="水雨情预警">
+			<step type="click" dom="css=input.btn" sleep="1000" isCheck="true"/>
+		</case>
+	</suit>
+	<suit  name="测站基础信息管理" ignore="true">
+		<case name="测站-新增" ignore="true" expect="保存成功" >
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu1" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[2]/div[2]" value=""/>
+			<step type="selectFrame" dom="frame_content" value=""/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[1]/input" value="xztest01"/>
+			<step type="type" dom="name=lgtd" value="90.1234"/>
+			<step type="type" dom="name=lttd" value="28.1342"/>
+			<step type="select" dom="id=rvcd" value = "label=雅鲁藏布江"/>
+			<step type="type" dom="name=stlc" value="西藏自治区测试点"/>
+			<step type="select" dom="css=div.yui.yui1 > #sttp" value="label=水库水文站"/>
+			<step type="type" dom="name=stnm" value="西藏测试站"/> 
+			<step type="select" dom="id=adcd" value="label=拉萨市"/>
+			<step type="select" dom="css=div.yui.yui1 > #addvcd" value="label=城关区"/>
+			<step type="type" dom="name=hnnm" value="西藏水系1"/>
+			<step type="select" dom="name=bascd" value="label=长江流域"/>
+			 <step type="type" dom="name=stazt" value="23"/>
+			<step type="select" dom="id=stbk" value="label=左岸"/>
+			 <step type="type" dom="name=esstym" value="201408"/>
+			<step type="type" dom="name=bgfrym" value="201409"/> 
+			<step type="type" dom="name=drna" value="123"/>
+			<step type="type" dom="name=dtmnm" value="西藏测站基面"/>
+			<step type="type" dom="name=dtmel" value="12.2"/>
+			<step type="type" dom="name=dtpr" value="0.5"/>
+			<step type="select" dom="css=div.yui.yui1 > #frgrd" value="label=省级重点报汛站"></step>
+			<step type="type" dom="name=atcunit" value="西藏自治区测试部"/>
+			<step type="type" dom="name=admauth" value="西藏自治区测试部"/>
+			<step type="select" dom="name=usfl" value="label=是"/>
+			<step type="type" dom="name=dstrvm" value="23.1"/>
+			<step type="select" dom="name=locality" value="label=部水文局"/>
+			<step type="type" dom="name=phcd" value="xzcsz"/>
+			<step type="type" dom="name=comments" value="该测站为系统测试所用"/>
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="测站-编辑" ignore="true" expect="保存成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu1" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[3]/div[2]" value=""/>
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="测站-查看" ignore="true" expect="返回列表">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu1" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[4]/div[2]" value=""/>
+			<step type="click" dom="//*[@id='matter2']/div/div[1]/div/div/div[2]"></step>
+		</case>
+		<case name="测站-删除" ignore="true" expect="删除成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu1" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[5]/div[2]" value=""/>
+			<step type="click" dom="link=确定" value=""/>
+			<step type="click" dom="css=div.cof.fl" value=""/> 
+		</case>
+	</suit>
+	<suit name="防洪指标管理" ignore="false">
+		<case name="库湖防洪指标-编辑" ignore="false" expect="保存成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu2" value=""/>
+			<step type="click" dom="name=id[2]" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[2]/div[2]" value=""/>
+			<!-- 赋值 -->
+			<step type="type" dom="name=damel" value="1.1"/>
+			<step type="type" dom="name=ckflz" value="2.2"/>
+			<step type="type" dom="name=dsflz" value="3.3"/>
+			<step type="type" dom="name=normz" value="4.4"/>
+			<step type="type" dom="name=ddz" value="5.5"/>
+			<step type="type" dom="name=actz" value="6.6"/>
+			<step type="type" dom="name=ttcp" value="7.7"/>
+			<step type="type" dom="name=fldcp" value="8.8"/>
+			<step type="type" dom="name=actcp" value="9.9"/>
+			<step type="type" dom="name=ddcp" value="10.10"/>
+			<step type="select" dom="xpath=//*[@id='contentInfo']/div[2]/div[13]/select" value="label=中型"/>
+			<!-- 确定保存 -->
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="库湖防洪指标-查看" ignore="true" expect="测站编码">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu2" value="" skip="true"/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[3]/div[2]" value=""/>
+			<step type="click" dom="//*[@id='matter2']/div/div[1]/div/div/div[2]" isCheck="true"></step>
+		</case>
+		<case name="库湖防洪指标-删除" ignore="true" expect="删除成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu2" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[4]/div[2]" value=""/>
+			<step type="click" dom="link=确定" value=""/>
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/> 
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="河道防洪指标-编辑" ignore="true" expect="保存成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu2" value="" skip="true"/>
+			<step type="click" dom="id=river" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[2]/div[2]" value=""/>
+			<!-- 赋值 -->
+			<step type="type" dom="name=ldkel" value="1.1"/>
+			<step type="type" dom="name=grz" value="2.2"/>
+			<step type="type" dom="name=grq" value="3.3"/>
+			<step type="type" dom="name=sfz" value="4.4"/>
+			<step type="type" dom="name=wrq" value="5.5"/>
+			<step type="type" dom="name=sfq" value="6.6"/>
+			<step type="type" dom="name=flpq" value="7.7"/>
+			<step type="type" dom="name=wrz" value="8.8"/>
+			<step type="type" dom="name=taq" value="9.9"/>
+			<step type="type" dom="name=laz" value="10.10"/>
+			<step type="type" dom="name=rdkel" value="11.11"/>
+			<step type="type" dom="name=laq" value="12.12"/>
+			<step type="type" dom="name=taz" value="13.13"/>
+			<step type="type" dom="name=ivmxq" value="14.14"/>
+			<step type="type" dom="name=ivmxqtm" value="1989-09-05 12:00:00"/>
+			<step type="type" dom="name=obmxq" value="15.15"/>
+			<step type="type" dom="name=ivhz" value="16.16"/>
+			<step type="type" dom="name=ivhztm" value="1989-09-05 12:00:00"/>
+			<step type="type" dom="name=obmxqtm" value="1989-09-05 12:00:00"/>
+			<step type="type" dom="name=obhtz" value="17.17"/>
+			<step type="type" dom="name=obhtztm" value="1989-09-05 12:00:00"/>
+			<!-- 确定保存 -->
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="河道防洪指标-查看" ignore="true" expect="测站编码">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu2" value="" skip="true"/>
+			<step type="click" dom="id=river" value="" skip="true"/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[3]/div[2]" value=""/>
+			<step type="click" dom="//*[@id='matter2']/div/div[1]/div/div/div[2]" isCheck="true"></step>
+		</case>
+		<case name="库河道防洪指标-删除" ignore="true" expect="删除成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu2" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[4]/div[2]" value=""/>
+			<step type="click" dom="link=确定" value=""/>
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/> 
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+	</suit>
+	<suit name="极值信息管理" ignore="true">
+		<case name="河道水情-编辑" ignore="false" expect="保存成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" />
+			<step type="click" dom="id=menu3" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[2]/div[2]" value=""/>
+			<!-- 赋值 -->
+			<step type="type" dom="name=htz" value="1.1"/>
+			<step type="type" dom="name=htztm" value="2001-11-25 08:00:00"/>
+			<step type="type" dom="name=ltz" value="3.3"/>
+			<step type="type" dom="name=ltztm" value="2001-11-25 08:00:00"/>
+			<step type="type" dom="name=mxq" value="5.5"/>
+			<step type="type" dom="name=mxqtm" value="2001-11-25 08:00:00"/>
+			<step type="type" dom="name=mnq" value="7.7"/>
+			<step type="type" dom="name=mnqtm" value="2001-11-25 08:00:00"/>
+			<!-- 确定保存 -->
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="河道水情-查看" ignore="true" expect="测站编码">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu3" value="" skip="true"/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[3]/div[2]" value=""/>
+			<step type="click" dom="//*[@id='matter2']/div/div[1]/div/div/div[2]" isCheck="true"></step>
+		</case>
+		<case name="河道水情-删除" ignore="true" expect="删除成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu3" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[4]/div[2]" value=""/>
+			<step type="click" dom="link=确定" value=""/>
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/> 
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="水库水情-编辑" ignore="true" expect="保存成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu3" value="" skip="true"/>
+			<step type="click" dom="id=reservoir" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[2]/div[2]" value=""/>
+			<!-- 赋值 -->
+			<step type="type" dom="name=htrz" value="1.1"/>
+			<step type="type" dom="name=htrztm" value="2013-02-12 08:00:00"/>
+			<step type="type" dom="name=ltrz" value="3.3"/>
+			<step type="type" dom="name=ltrztm" value="2013-02-12 08:00:00"/>
+			<step type="type" dom="name=mxinq" value="5.5"/>
+			<step type="type" dom="name=mxinqtm" value="2013-02-12 08:00:00"/>
+			<step type="type" dom="name=mninq" value="7.7"/>
+			<step type="type" dom="name=mninqtm" value="2013-02-12 08:00:00"/>
+			<step type="type" dom="name=mxotq" value="9.9"/>
+			<step type="type" dom="name=mxotqtm" value="2013-02-12 08:00:00"/>
+			<step type="type" dom="name=mnotq" value="11.11"/>
+			<step type="type" dom="name=mnotqtm" value="2013-02-12 08:00:00"/>
+			<step type="type" dom="name=mxw" value="13.13"/>
+			<step type="type" dom="name=mxwtm" value="2013-02-12 08:00:00"/>
+			<step type="type" dom="name=mnw" value="14.14"/>
+			<step type="type" dom="name=mnwtm" value="2013-02-12 08:00:00"/>
+			<!-- 确定保存 -->
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="水库水情-查看" ignore="true" expect="测站编码">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu3" value="" skip="true"/>
+			<step type="click" dom="id=reservoir" value="" skip="true"/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[3]/div[2]" value=""/>
+			<step type="click" dom="//*[@id='matter2']/div/div[1]/div/div/div[2]" isCheck="true"></step>
+		</case>
+		<case name="水库水情-删除" ignore="true" expect="删除成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu3" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[4]/div[2]" value=""/>
+			<step type="click" dom="link=确定" value=""/>
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/> 
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="堰闸水情-编辑" ignore="true" expect="保存成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu3" value="" skip="true"/>
+			<step type="click" dom="id=weir" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[2]/div[2]" value=""/>
+			<!-- 赋值 -->
+			<step type="type" dom="name=htupz" value="1.1"/>
+			<step type="type" dom="name=htupztm" value="1989-09-05 12:00:00"/>
+			<step type="type" dom="name=ltupz" value="3.3"/>
+			<step type="type" dom="name=ltupztm" value="1989-09-05 12:00:00"/>
+			<step type="type" dom="name=mxgtq" value="5.5"/>
+			<step type="type" dom="name=mxgtqtm" value="1989-09-05 12:00:00"/>
+			<step type="type" dom="name=mngtq" value="7.7"/>
+			<step type="type" dom="name=mngtqtm" value="1989-09-05 12:00:00"/>
+			<step type="type" dom="name=htdwz" value="9.9"/>
+			<step type="type" dom="name=htdwztm" value="1989-09-05 12:00:00"/>
+			<step type="type" dom="name=ltdwz" value="11.11"/>
+			<step type="type" dom="name=ltdwztm" value="1989-09-05 12:00:00"/>
+			<!-- 确定保存 -->
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="堰闸水情-查看" ignore="true" expect="测站编码">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu3" value="" skip="true"/>
+			<step type="click" dom="id=weir" value="" skip="true"/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[3]/div[2]" value=""/>
+			<step type="click" dom="//*[@id='matter2']/div/div[1]/div/div/div[2]" isCheck="true"></step>
+		</case>
+		<case name="堰闸水情-删除" ignore="true" expect="删除成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu3" value=""/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[4]/div[2]" value=""/>
+			<step type="click" dom="link=确定" value=""/>
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/> 
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+	</suit>
+	<suit name="站点设备" ignore="true">
+		<case name="站点设备管理-新增" ignore="false" expect="保存成功" >
+			<step type="click" dom="link=站网管理" value="" sleep="1000" />
+			<step type="click" dom="id=menu5" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[2]/div[2]" value=""/>
+			<step type="type" dom="name=stcdnm" value="90631036 | 松巴"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[2]/div[2]/input" value="90631036"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[3]/div[2]/input" value="sb0001"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[4]/input" value = "松巴设备1"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[5]/input" value="sbgg"/>
+			<step type="select" dom="xpath=//*[@id='eqst']" value="label=使用中"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[7]/input" value="cwbm01"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[8]/div/input" value="2014-10-29 10:44:59"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[9]/input" value="松巴设备管理员" />
+			<step type="select" dom="xpath=//*[@id='contentInfo']/div[10]/select" value="label=水位观测设备"/>
+			 <step type="type" dom="xpath=//*[@id='contentInfo']/div[11]/input" value="松巴设备管理部"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[12]/input" value="西藏自治区"/>
+			 <step type="click" dom="css=div.cof.fl" value="" isCheck="true"/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="站点设备管理-编辑" ignore="false" expect="保存成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" />
+			<step type="click" dom="id=menu5" value="" />
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[3]/div[2]" value=""/>
+			<!-- 赋值 -->
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[2]/input" value="sb0001"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[3]/input" value = "松巴设备11"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[4]/input" value="sbgg11"/>
+			<step type="select" dom="xpath=//*[@id='eqst']" value="label=使用中"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[6]/input" value="cwbm02"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[7]/div/input" value="2014-10-30 10:44:59"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[8]/input" value="松巴设备管理员11"/>
+			<step type="select" dom="xpath=//*[@id='contentInfo']/div[9]/select" value="label=流量测验设备" />
+			 <step type="type" dom="xpath=//*[@id='contentInfo']/div[10]/input" value="松巴设备管理部11"/>
+			<step type="type" dom="xpath=//*[@id='contentInfo']/div[11]/input[2]" value="西藏自治区11"/>
+			<!-- 确定保存 -->
+			<step type="click" dom="css=div.cof.fl" value="" isCheck="true"/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+		<case name="站点设备管理-查看" ignore="false" expect="测站编码">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu5" value="" skip="true"/>
+			<step type="click" dom="name=id" value=""/>
+			<step type="click" dom="//div[@id='toolbar']/div/div[4]/div[2]" value=""/>
+			<step type="click" dom="//*[@id='matter2']/div/div[1]/div/div/div[2]" isCheck="true"></step>
+		</case>
+		<case name="站点设备管理-删除" ignore="false" expect="删除成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000" skip="true"/>
+			<step type="click" dom="id=menu5" value="" skip="true"/>
+			<step type="click" dom="name=id" value="" />
+			<step type="click" dom="//div[@id='toolbar']/div/div[5]/div[2]" value=""/>
+			<step type="click" dom="link=确定" value=""/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+	</suit>
+	<suit name="奇异值标准管理" ignore="true">
+		<case name="奇异值标准管理-编辑" ignore="false" expect="保存成功">
+			<step type="click" dom="link=站网管理" value="" sleep="1000"/>
+			<step type="click" dom="id=menu6" value=""/>
+			<step type="click" dom="xpath=//*[@id='_easyui_tree_1640']" value="" />
+			<step type="click" dom="xpath=//*[@id='editicon']/div/div[2]" value=""/>
+			<step type="type" dom="name=uvl" value="30.1"/>
+			<step type="type" dom="xpath=(//input[@name='uvl'])[2]" value="50.1"/>
+			<step type="type" dom="xpath=(//input[@name='uvl'])[3]" value="100.1"/>
+			<step type="type" dom="xpath=(//input[@name='uvl'])[4]" value="1200.1"/>
+			<step type="type" dom="xpath=(//input[@name='uvl'])[5]" value="1200.1"/>
+			<step type="type" dom="xpath=(//input[@name='uvl'])[6]" value="2400.1"/>
+			<step type="type" dom="xpath=(//input[@name='dvl'])[2]" value="10.1"/>
+			<step type="type" dom="xpath=(//input[@name='uvl'])[7]" value="80.1"/>
+			<step type="type" dom="name=aoic" value="10"/>
+			<step type="click" dom="id=save" value=""/>
+			<step type="click" dom="link=确定" value=""/>
+		</case>
+	</suit>
+</test>
