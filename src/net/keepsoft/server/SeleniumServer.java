@@ -49,7 +49,7 @@ public class SeleniumServer{
 	public List<TestSuit> findSeleniumSuitByProductId(Integer productId) {
 		List<TestSuit> result = new ArrayList<TestSuit>();
 		String sql = "select max(id) id,name , max(isIgnore) isIgnore,max(productId) productId,case  when count(*)-sum(result=1)=0 then 1 else 0 end result from ("
-				+" select s.*,c.result from ck_suit s,ck_case c where s.productId = ? and s.id = c.suitId and s.deleted =0 and c.deleted=0 "
+				+" select s.*,c.result from ck_suit s left join (select * from ck_case where deleted=0 ) c on  s.id = c.suitId where s.productId = ?  and s.deleted =0 "
 				+" ) t group by name";
 		result = dao.queryForBeanList(sql, TestSuit.class, productId);
 		return result;
@@ -161,16 +161,16 @@ public class SeleniumServer{
 		}
 		return flag;
 	}
-	public List<TestStep> findNoActionTestSteps(String stage) {
+	public List<TestStep> findNoActionTestSteps(String stage,String productId) {
 		List<TestStep> result = new ArrayList<TestStep>();
-		result = dao.queryForBeanList("select * from ck_step where stage = ? order by ord", TestStep.class, stage);
+		result = dao.queryForBeanList("select * from ck_step where stage = ? and productId=? order by ord", TestStep.class, stage,productId);
 		return result;
 	}
-	public Integer saveNoActionSteps(final List<Map<String,String>> list,final String stage) {
+	public Integer saveNoActionSteps(final List<Map<String,String>> list,final String stage,final String productId) {
 		int flag = 1;
 		try {
-			dao.update("delete from ck_step where stage = ? ",stage);
-			dao.batchUpdate("insert into ck_step(name,type,dom,value,sleep,ord,stage,snapshot) values(?,?,?,?,?,?,?,?)", 
+			dao.update("delete from ck_step where stage = ? and productId = ? ",stage,productId);
+			dao.batchUpdate("insert into ck_step(name,type,dom,value,sleep,ord,stage,snapshot,productId) values(?,?,?,?,?,?,?,?,?)", 
 					new BatchPreparedStatementSetter(){
 					
 						@Override
@@ -189,6 +189,7 @@ public class SeleniumServer{
 							ps.setInt(6, i+1);
 							ps.setString(7, stage);
 							ps.setInt(8, Integer.parseInt(list.get(i).get("snapshot")));
+							ps.setInt(9, Integer.parseInt(productId));
 						}
 				
 			});
@@ -331,5 +332,9 @@ public class SeleniumServer{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public Integer exportScript(String productId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

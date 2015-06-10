@@ -20,6 +20,9 @@ import net.keepsoft.test.entity.TestCase;
 import net.keepsoft.test.entity.TestStep;
 import net.keepsoft.test.entity.TestSuit;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -163,8 +166,8 @@ public class SeleniumController{
 	 */
 	@RequestMapping(value="/findNoActionTestSteps")
 	@ResponseBody
-	public List<TestStep> findNoActionTestSteps(String stage){
-		return ss.findNoActionTestSteps(stage);
+	public List<TestStep> findNoActionTestSteps(String stage,String productId){
+		return ss.findNoActionTestSteps(stage,productId);
 	}
 	/**
 	 * 
@@ -175,10 +178,10 @@ public class SeleniumController{
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/saveNoActionSteps")
 	@ResponseBody
-	public Integer saveNoActionSteps(String steps,String stage){
+	public Integer saveNoActionSteps(String steps,String stage,String productId){
 		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
 		list = JSONUtils.fromJSON(steps,new ArrayList<Map<String,String>>().getClass());
-		return ss.saveNoActionSteps(list,stage);
+		return ss.saveNoActionSteps(list,stage,productId);
 	}
 	/**
 	 * 开始执行selenium测试
@@ -343,5 +346,28 @@ public class SeleniumController{
 	@ResponseBody
 	public Integer clearRelate(String relateId){
 		return ss.clearRelate(relateId);
+	}
+	/**
+	 * 
+	 * @param relateId
+	 * @return
+	 */
+	@RequestMapping(value="/exportScript")
+	@ResponseBody
+	public Integer exportScript(String productId,HttpServletRequest request){
+		Map<String, Object> seleniumPropertyies = ss.findSelenium(productId);
+		
+		Document document = DocumentHelper.createDocument();
+		//根节点
+		Element root =  document.addElement("selenium");
+		//设置config
+		Element config = root.addElement("config");
+		Element baseUrl = config.addElement("baseUrl");
+		baseUrl.addText((String) seleniumPropertyies.get("address"));
+		Element driver = config.addElement("driver");
+		driver.addText((String) seleniumPropertyies.get("browser"));
+		//写入init
+		
+		return 0;//ss.exportScript(productId);
 	}
 }

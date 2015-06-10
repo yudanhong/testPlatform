@@ -4,7 +4,7 @@
 });
 //----------------------------获取action中所有的用例集--------------------------------------------------
 function findTestStepList(){
-  $.getJSON('../../selenium/findNoActionTestSteps.do',{'stage':'init'},
+  $.getJSON('../../selenium/findNoActionTestSteps.do',{'stage':'init','productId':$("#id").val()},
 			function(data) {
 			var lastIndex = (data==null)?1:(data.length+1);
 			$("tr:last td:first").text(lastIndex);
@@ -108,7 +108,7 @@ function addSteps(){
 	});
 	
 	if(flag == "0"){ return;}
-	$.getJSON('../../selenium/saveNoActionSteps.do',{'steps':JSON.stringify(steps),'stage':'init'},
+	$.getJSON('../../selenium/saveNoActionSteps.do',{'steps':JSON.stringify(steps),'stage':'init','productId':$("#id").val()},
 			function(data) {
 				if(data==0){
 						alert("保存失败！");

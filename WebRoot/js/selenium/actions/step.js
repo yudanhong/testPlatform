@@ -3,7 +3,20 @@
  $("#steptitle").text(caseName+" >> step编辑");
  $(function(){
 	findTestStepList();
+	
 });
+ //切换输入和选择
+ function changeOther(dom){
+	 var input = $(dom).prev();
+	 if(input.is(":hidden")){
+		 input.show();
+		// input.val("");
+		 input.prev().hide();
+	 }else{
+		 input.hide();
+		 input.prev().show();
+	 }
+ }
 //----------------------------返回用例列表---------------------------------------
  function gobacktoCaseList(){
 	 $(".panel-body").htmlLoad("page/selenium/actions/case.jsp?suitId="+suitId+"&suitName="+suitName+"&productId="+productId);
@@ -21,8 +34,11 @@ function findTestStepList(){
 					var temp = $("<tr>"+
 						"<td>"+(i+1)+"</td>"+
 						"<td><input type='text' value='"+n.name+"'/></td>"+
-						"<td><select><option value='click'>click</option><option value='type'>type</option><option value='select'>select</option><option value='selectFrame'>selectFrame</option><option value='keyUp'>keyUp</option></select></td>"+
-						"<td><input type='text' value='"+n.dom+"'/></td>"+
+						"<td><select><option value='click'>click</option><option value='type'>type</option><option value='select'>select</option>" +
+						"<option value='selectFrame'>selectFrame</option><option value='selectWindow'>selectWindow</option><option value='keyUp'>keyUp</option>" +
+						"<option value='javascript'>javascript</option><option value='getElementByClassName'>getElementByClassName</option></select>" +
+						"<input type='text'  style='display:none;width:193px;'><a href='#' onclick='changeOther(this);'>切换</a></td>"+
+						"<td><input type='text' style='width:300px;' value='"+n.dom+"'/></td>"+
 						"<td><input type='text' value='"+n.value+"'/></td>"+
 						"<td><input class='x' onkeyup='$(this).clearNoNum(1)' type='text' value='"+(n.sleep==0?'':n.sleep)+"'/></td>"+
 						"<td><select ><option value='0'>否</option><option value='1'>是</option></select></td>"+
@@ -30,7 +46,16 @@ function findTestStepList(){
 						"<td><select><option value='0'>否</option><option value='1'>是</option></select></td>"+
 						"<td><a class='btn btn-link' onclick='addBefore(this)'>之前添加</a><a class='btn btn-link' onclick='addAfter(this)'>之后添加</a><a onclick='deleteStep(this)' class='btn btn-link' >删除</a></td>"+
 					"</tr>");
-					$(temp).children("td:eq(2)").children().val(n.type);
+					var typedom = $(temp).children("td:eq(2)");
+//					alert(typedom.find("option[value='"+n.type+"']").val()==undefined);
+					if(typedom.find("option[value='"+n.type+"']").val()==undefined){
+						typedom.children(":eq(1)").val(n.type);
+						typedom.children(":eq(1)").show();
+						typedom.children(":eq(0)").hide();
+					}else{
+						typedom.children(":eq(0)").val(n.type);
+					}
+//					$(temp).children("td:eq(2)").children().val(n.type);
 					$(temp).children("td:eq(6)").children().val(n.isIgnore);
 					$(temp).children("td:eq(7)").children().val(n.ischeck);
 					$(temp).children("td:eq(8)").children().val(n.snapshot);
@@ -66,15 +91,18 @@ function getEmptyRow(){
 	var dom = $("<tr>"+
 			"<td>"+$("tr").length+"</td>"+
 			"<td><input type='text' value=''/></td>"+
-			"<td><select><option value='click'>click</option><option value='type'>type</option><option value='select'>select</option><option value='selectFrame'>selectFrame</option><option value='keyUp'>keyUp</option></select></td>"+
-			"<td><input type='text' value=''/></td>"+
+			"<td><select><option value='click'>click</option><option value='type'>type</option>" +
+			"<option value='select'>select</option><option value='selectFrame'>selectFrame</option><option value='selectWindow'>selectWindow</option><option value='keyUp'>keyUp</option>" +
+			"<option value='javascript'>javascript</option><option value='getElementByClassName'>getElementByClassName</option></select>" +
+			"<input type='text'  style='display:none;width:193px;'><a href='#' onclick='changeOther(this);'>切换</a></td>"+
+			"<td><input type='text' style='width:300px;' value=''/></td>"+
 			"<td><input type='text' value=''/></td>"+
 			"<td><input onkeyup='$(this).clearNoNum(1)' type='text' value=''/></td>"+
 			"<td><select ><option value='0'>否</option><option value='1'>是</option></select></td>"+
 			"<td><select ><option value='0'>否</option><option value='1'>是</option></select></td>"+
 			"<td><select ><option value='0'>否</option><option value='1'>是</option></select></td>"+
 			"<td><a class='btn btn-link' onclick='addBefore(this)'>之前添加</a><a class='btn btn-link' onclick='addAfter(this)'>之后添加</a><a onclick='deleteStep(this)' class='btn btn-link' >删除</a></td>"+
-		"</tr>");
+		"<input type='text'  style='display:none;width:193px;'><a href='#' onclick='changeOther(this);'>切换</a></tr>");
 	return dom;
 }
 //----------------------------删除用例集--------------------------------------------------
@@ -96,7 +124,7 @@ function addSteps(){
 	$("tr:gt(0)").each(function(i,n){
 		step = {};
 		step.name = $(n).find("td:eq(1)").children().val();
-		step.type = $(n).find("td:eq(2)").children().val();
+		step.type = $(n).find("td:eq(2)").children(":visible").val();
 		step.dom = $(n).find("td:eq(3)").children().val();
 		step.value = $(n).find("td:eq(4)").children().val();
 		step.sleep = $(n).find("td:eq(5)").children().val();
@@ -117,14 +145,19 @@ function addSteps(){
 			steps.push(step);
 		}
 	});
+	if(steps.length==0&&flag==1){
+		alert("请输入测试步骤！");
+		return;
+	}
 	
 	if(flag == "0"){ return;}
+//	alert(JSON.stringify(steps));
 	$.post('../../selenium/saveStepsByCaseId.do',{'steps':JSON.stringify(steps),'caseId':caseId},
 			function(data) {
 				if(data==0){
 						alert("保存失败！");
 					 }else{
-						 alert("保存成功！");
+//						 alert("保存成功！");
 							$(".panel-body").htmlLoad("page/selenium/actions/case.jsp?suitId="+suitId+"&suitName="+suitName+"&productId="+productId);
 						}
 			});

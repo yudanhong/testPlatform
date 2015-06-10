@@ -12,19 +12,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="panel panel-primary" style="margin-bottom:0px;margin-top:30px;">
   <div id="steptitle" class="panel-heading"></div>
 </div>
+
 <table class="table table-striped table-hover table-bordered">
 	<thead>
 		<tr >
-			<th >序号</th>
+			<th ></th>
 			<th >step名称</th>
 			<th >type</th>
-			<th>dom</th>
-			<th>value</th>
-			<th>sleep</th>
-			<th>是否忽略</th>
-			<th>是否验证</th>
-			<th>截图</th>
-			<th>操作</th>
+			<th >dom</th>
+			<th >value</th>
+			<th >sleep</th>
+			<th >忽略</th>
+			<th >验证</th>
+			<th >截图</th>
+			<th >操作</th>
 		</tr>
 	</thead>
 	<tbody id="testStepList">
@@ -32,15 +33,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<td ></td>
 				<td ><input type="text"></td>
 				<td >
-					<select>
+					 <select >
 						<option value='click'>click</option>
 						<option value='type'>type</option>
 						<option value='select'>select</option>
 						<option value='selectFrame'>selectFrame</option>
+						<option value='selectWindow'>selectWindow</option>
 						<option value='keyUp'>keyUp</option>
-					</select>
+						<option value='javascript'>javascript</option>
+						<option value='getElementByClassName'>getElementByClassName</option>
+					</select> 
+					<input type="text"  style="display:none;width:193px;" >
+					<a href="#" onclick="changeOther(this);">切换</a>
 				</td>
-				<td><input type="text"></td>
+				<td><input style="width:300px;" type="text"></td>
 				<td><input type="text"></td>
 				<td><input  onkeyup="$(this).clearNoNum(1)" type="text"></td>
 				<td><select><option value='0'>否</option><option value='1'>是</option></select></td>

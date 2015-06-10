@@ -16,18 +16,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <link rel="stylesheet" href="css/templatemo_main.css">
   <script type="text/javascript" src="js/jquery.js"></script>
   <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/ztree/js/jquery.ztree.core-3.5.js"></script>
+  <style type="text/css">
+  	.ztree li{
+  		margin-top:10px;
+  		cursor:pointer;
+  	}
+  </style>
   <script type="text/javascript" >
   $(function(){
 	  loadList();
 	});
   function loadList() {
-	    $.getJSON('main/findModel.do',null, function(data) {
-		    $.each(data,function(i,n){
-				var temp = "<tr><td ><input value="+n.id+" type='checkbox'></td><td>"+n.name+"</td><td>"+n.remark+"</td></tr>";
-				$("#modelList").append(temp);
-			});
-	    });
+	  $.getJSON('checklist/findCategory.do',null,
+					function(data) {
+							var setting = {
+								view: {
+									selectedMulti: false
+								},
+								data: {
+									simpleData: {
+										enable: true
+									}
+								},
+								callback: {
+										onClick: zTreeOnClick
+									}
+							};
+						//加载树
+						$.fn.zTree.init($("#treeDemo"), setting, data);	
+						$("#relatecaselist").empty();
+					}); 
 	}
+	function zTreeOnClick(event, treeId, treeNode) {
+		 $.getJSON('checklist/findCheckListByCategoryId.do',{'categoryId':treeNode.id},
+				function(data) {
+					$("#checklist").empty();
+					$.each(data,function(i,n){
+						var color= n.lastRunResult=='pass'?'success':n.lastRunResult=='fail'?'danger':'';
+						var temp = "<tr class='"+color+"'><td>"+(i+1)+"</td><td><a class='btn btn-link'>"+n.title+
+						"</a></td>"+
+						"<td >"+(n.lastRunResult==null?'':n.lastRunResult)+"</td>"+
+						"<td>"+(n.relatecaseName==null?'':n.relatecaseName)+"</td>"+
+						  "<td><a class='btn btn-link' onclick=relateFrame("+n.id+","+n.relatecaseId+",this)>设置关联</a>"+
+						  "<a class='btn btn-link' onclick=clearRelate("+n.id+","+n.relatecaseId+",this)>清除关联</a></td></tr>";
+						$("#checklist").append(temp);
+					});
+				}); 
+};
   </script>
 </head>
 <body>
@@ -52,105 +88,53 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </form>
           </li>
           <li class="active"><a href="index.jsp"><i class="fa fa-home"></i>分类</a></li>
-         
            <li class=""><a href="page/selenium.jsp"><i class="fa fa-home"></i>selenium自动检查</a></li>
            <li class=""><a href="page/relatecase.jsp"><i class="fa fa-home"></i>关联用例</a></li>
         </ul>
-      </div><!--/.navbar-collapse -->
+      </div>
 
       <div class="templatemo-content-wrapper">
         <div class="templatemo-content">
           <ol class="breadcrumb">
-            <li><a >当前页：分类</a></li>
+            <li>当前页：检查点</li>
           </ol>
-          
-
-          
-          <div class="templatemo-panels">
-            <div class="row">
-              <div class="col-md-12">
-                  <span class="btn btn-primary"><a href="#">新增</a></span>
-                  <span class="btn btn-primary"><a href="#">编辑</a></span>
-                  <span class="btn btn-primary"><a href="#">查看</a></span>
-                  <span class="btn btn-primary"><a href="#">删除</a></span>
+       <div class="templatemo-panels">   
+		<div class="row">
+              <div class="col-md-2 col-sm-6" >
+                <div class="panel panel-success">
+                  <div class="panel-heading">分类</div>
+                 	<div class="zTreeDemoBackground left" style="min-height:700px;margin-top:10px;">
+						<ul id="treeDemo" class="ztree"></ul>
+					</div>
+                 </div>                       
               </div>
-              
-            </div>
-            &nbsp;
-            <div class="row">
-              <div tyle="width:100%;" class="yudh_col-md-6 col-sm-6">
-                <div class="tab-content">
-                <div class="row">
-              <div class="yudh_col-md-6 col-sm-6 margin-bottom-30">
+              <div class="col-md-9 col-sm-6">
+	              <div onclick="" style="width:70px;margin-bottom:10px;">
+					<b class="yudh_operator-icon yudh_up-icon" title="新增action"></b>
+					<div class="yudh_operat-name" style="width:70px;">新增用例集</div>
+				  </div>
                 <div class="panel panel-primary">
-                  <div class="panel-heading">分类列表</div>
+                  <div class="panel-heading">检查点</div>
                   <div class="panel-body">
                     <table class="table table-striped table-hover table-bordered">
-                      <thead>
-                        <tr>
-                       		<th>选择</th>
-                          <th>分类</th>
-                          <th>备注</th>
-                        </tr>
-                      </thead>
-                      <tbody id="modelList">
-                        
-                      </tbody>
-                    </table>
+						<thead>
+							<tr>
+								<th >序号</th>
+								<th >用例标题</th>
+								<th >结果</th>
+								<th >关联</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody id="checklist">
+			
+						</tbody>
+					</table>
                   </div>
                 </div>
-              </div>       
+              </div>
             </div>
-                  <div class="tab-pane fade" id="profile">
-                    <ul class="list-group">
-                      <li class="list-group-item">
-                        <span class="badge">33</span>
-                        Vivamus dictum posuere odio
-                      </li>
-                      <li class="list-group-item">
-                        <span class="badge">9</span>
-                        Dapibus ac facilisis in
-                      </li>
-                      <li class="list-group-item">
-                        <span class="badge">0</span>
-                        Morbi convallis sed nisi suscipit
-                      </li>
-                      <li class="list-group-item">
-                        <span class="badge">14</span>
-                        Cras justo odio
-                      </li>
-                      <li class="list-group-item">
-                        <span class="badge">2</span>
-                        Vestibulum at eros
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="tab-pane fade" id="messages">
-                    <div class="list-group">
-                      <a href="#" class="list-group-item active">
-                        Morbi convallis sed nisi suscipit
-                      </a>
-                      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-                      <a href="#" class="list-group-item">Morbi leo risus</a>
-                      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                      <a href="#" class="list-group-item">Vestibulum at eros</a>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="settings">
-                    <div class="list-group">
-                      <a href="#" class="list-group-item disabled">
-                        Vivamus dictum posuere odio
-                      </a>
-                      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                      <a href="#" class="list-group-item">Vestibulum at eros</a>
-                      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-                      <a href="#" class="list-group-item">Morbi leo risus</a>
-                    </div>
-                  </div>
-                </div> <!-- tab-content --> 
-              </div> 
-            </div> 
-          </div>    
+         </div> 
         </div>
       </div>
       <!-- Modal -->
@@ -170,7 +154,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </div>
       <footer class="templatemo-footer">
         <div class="templatemo-copyright">
-          <p>Copyright &copy; 2014 keepsoft，create by yudanhong </p>
+          <p>Copyright &copy; 2014 keepsoft，create by yudanhong</p>
         </div>
       </footer>
     </div>

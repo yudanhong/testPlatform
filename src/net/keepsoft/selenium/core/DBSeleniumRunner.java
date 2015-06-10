@@ -2,9 +2,7 @@ package net.keepsoft.selenium.core;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +18,7 @@ import net.keepsoft.utils.CommonUtils;
 import net.keepsoft.utils.Waite;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.JavascriptExecutor;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -59,7 +58,7 @@ public class DBSeleniumRunner implements SeleniumRunnable {
 			//保存本次运行信息-时间、浏览器、运行ip等
 			execId = ss.saveSeleniumCheck(tdriver.getBrowser(),pro.getProductId());
 			//开始init
-			executeInitCase();
+			executeInitCase(pro.getProductId());
 			//执行actions
 			if(pro.getCaseId()==null&&pro.getSuitId()==null){
 				loadSeleniumCase(null,pro.getProductId());
@@ -109,6 +108,7 @@ public class DBSeleniumRunner implements SeleniumRunnable {
 
 	@Override
 	public void executeCase(TestCase tcase){
+		JavascriptExecutor js= (JavascriptExecutor)tdriver.getDriver();
 		//执行单个用例时发生异常，刷新主页
 		try {
 			if(!tdriver.getDriver().equals("htmlUnit")){
@@ -120,14 +120,26 @@ public class DBSeleniumRunner implements SeleniumRunnable {
 				List<TestStep> steps = ss.findTestStepByCaseId(tcase.getId());
 				for(TestStep step:steps){
 					if(step.getIsIgnore()==0){
-						if(StringUtils.isEmpty(step.getValue())){
-							selenium.getClass().getMethod(step.getType(),  String.class).invoke(selenium,step.getDom());
+						if(step.getType().equals("javascript")){
+							js.executeScript("var e = document.createEvent('MouseEvents');e.initEvent('click', true, true);"+step.getDom());
+							//若是输入document.getElementsByName("rvcd").options[1].selected = true;
+							//WebElement.sendKeys ("The words you want to type");
+						}else if(step.getType().equals("getElementByClassName")){
+							js.executeScript(getElementByTagAndClassName(step.getDom().split("=")[0], step.getDom().split("=")[1], step.getValue().split(",")[0].split("=")[1], step.getValue().split(",")[1].split("=")[1]));
+							
 						}else{
-							selenium.getClass().getMethod(step.getType(),  String.class,String.class).invoke(selenium,step.getDom(),step.getValue());
+							
+							if(StringUtils.isEmpty(step.getValue())){
+								selenium.getClass().getMethod(step.getType(),  String.class).invoke(selenium,step.getDom());
+							}else{
+								selenium.getClass().getMethod(step.getType(),  String.class,String.class).invoke(selenium,step.getDom(),step.getValue());
+							}
 						}
+						
 						if(step.getSleep()!=0){
 							Thread.sleep(step.getSleep());
 						}
+						System.out.println("---------------------------"+step.getDom()+"--------------------------------------"+"\r"+selenium.getHtmlSource());
 						if(!tdriver.getDriver().equals("htmlUnit")&&step.getSnapshot()==1){
 							photos.append(";"+CommonUtils.snapshot(photoBasePath, tdriver.getDriver()));
 						}
@@ -159,7 +171,7 @@ public class DBSeleniumRunner implements SeleniumRunnable {
 		selenium.stop();
 	}
 	
-	public void executeInitCase(){
+	public void executeInitCase(String productId){
 		try {
 			if(!tdriver.getBrowser().equals("htmlUnit")){
 				photos = new StringBuffer("");
@@ -167,15 +179,17 @@ public class DBSeleniumRunner implements SeleniumRunnable {
 				photoBasePath = SNAPSHOTPATH+"\\"+CommonUtils.getTime("HHmmss")+"_initcase";
 				CommonUtils.mkDir(photoBasePath);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 			}
-			List<TestStep> steps = ss.findNoActionTestSteps("init");
+			List<TestStep> steps = ss.findNoActionTestSteps("init",productId);
 			if(steps!=null&&steps.size()>0){
 				for(TestStep step:steps){
 					//不执行忽略的步骤
 					if(step.getIsIgnore()==0){
 						if(StringUtils.isEmpty(step.getValue())){
 							selenium.getClass().getMethod(step.getType(),  String.class).invoke(selenium,step.getDom());
+							System.out.println("---------------------------"+step.getDom()+"--------------------------------------"+"\r"+selenium.getHtmlSource());
 						}else{
 							selenium.getClass().getMethod(step.getType(),  String.class,String.class).invoke(selenium,step.getDom(),step.getValue());
+							System.out.println("---------------------------"+step.getDom()+"--------------------------------------"+"\r"+selenium.getHtmlSource());
 						}
 						if(step.getSleep()!=0){
 							Thread.sleep(step.getSleep());
@@ -210,5 +224,24 @@ public class DBSeleniumRunner implements SeleniumRunnable {
 	public void updateZTCaseResult(TestCase tcase,boolean res){
 		ss.updateZTCaseResult(tcase.getId(),res);
 	}
+	
+	//根据className获取元素
+	public String getElementByTagAndClassName(String tagName,String className,String index,String act){
+		StringBuffer script = new StringBuffer("var all = document.getElementsByTagName('"+tagName+"');");
+		   script.append("var elements = new Array();var n = 0 ;");
+		   script.append("for (var e = 0; e < all.length; e++) {");
+			   script.append("if (all[e].className.indexOf('"+className+"')!=-1) {");
+				   script.append("elements[n++] = all[e];");
+				  // script.append("break;");
+				   script.append("}");
+			   script.append("}");
+			 //  script.append("document.getElementsByName('starttime')[0].value=elements["+index+"].innerHTML; ");
+			   
+			   script.append("var e = document.createEvent('MouseEvents');");
+			   script.append("e.initEvent('click', true, true);");
+		   script.append("elements["+index+"]."+act+";");
+		   return script.toString();
+	}
+	
 
 }

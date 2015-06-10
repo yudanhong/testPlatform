@@ -26,6 +26,7 @@ function findSeleniumSuitList(){
                           	"<li><a href=javascript:editSuit("+n.id+")>编辑用例集</a></li>"+
                           	"<li><a href=javascript:deleteSuit("+n.id+")>删除用例集</a></li>"+
                           	"<li><a href=javascript:execSuit("+n.id+")>执行用例集</a></li>"+
+                          	"<li><a href=javascript:exportScript("+n.id+")>导出脚本</a></li>"+
                           	//"<li><a href=javascript:managerCase("+n.id+",'"+n.name+"')>case管理</a></li>"+
                         " </ul>"+
                        "</div></td></tr>";
@@ -65,6 +66,11 @@ function goback(){
 function execSuit(id){
 	var selenium = {'suitId':id,'productId':$("#id").val()} ;
 	$.getJSON('<%=basePath%>selenium/executeSuit.do',selenium, function(data) {
+				  
+	});
+}
+function exportScript(id){
+	$.getJSON('<%=basePath%>selenium/exportScript.do',{'productId':id}, function(data) {
 				  
 	});
 }
